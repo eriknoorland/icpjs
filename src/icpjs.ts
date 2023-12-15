@@ -1,7 +1,7 @@
 import {
   Options,
   Point,
-  Tranformation,
+  Transformation,
   Pose,
   Result,
   instanceOfPoint,
@@ -50,7 +50,7 @@ export default (function() {
     };
 
     const numDataPoints:number = data.length;
-    const transform:Tranformation = { x: 0, y: 0, phi: 0 };
+    const transform:Transformation = { x: 0, y: 0, phi: 0 };
     let dataPoints:Array<Point> = [...data];
     let numIterations:number = 0;
 
@@ -124,7 +124,7 @@ export default (function() {
         break;
       }
 
-      const transformation:Tranformation = { x: 0, y: 0, phi: 0 };
+      const transformation:Transformation = { x: 0, y: 0, phi: 0 };
       transformation.phi = Math.atan2(sxy - syx, sxx + syy);
 
       const c:number = Math.cos(transformation.phi);

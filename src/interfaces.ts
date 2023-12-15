@@ -21,14 +21,14 @@ export interface Pose {
   phi: number,
 };
 
-export interface Tranformation {
+export interface Transformation {
   x: number,
   y: number,
   phi: number,
 };
 
 export interface Result {
-  transformation:Tranformation,
+  transformation:Transformation,
   dataPoints:Array<Point>,
   numIterations:number,
 };

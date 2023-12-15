@@ -1,6 +1,6 @@
-import { Point, Tranformation } from '../interfaces';
+import { Point, Transformation } from '../interfaces';
 
-export default (points:Array<Point>, transformation:Tranformation):Array<Point> => {
+export default (points:Array<Point>, transformation:Transformation):Array<Point> => {
   const { phi } = transformation;
   const s = Math.sin(phi);
   const c = Math.cos(phi);

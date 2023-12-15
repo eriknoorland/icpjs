@@ -15,11 +15,11 @@ import pointToPlane from './pointToPlane';
 
 export default (function() {
   const run = (
-    reference:Array<any>,
-    data:Array<Point>,
-    pose:Pose = { x: 0, y: 0, phi: 0 },
-    options:Options = {}
-  ):Result => {
+    reference: Array<any>,
+    data: Array<Point>,
+    pose: Pose = { x: 0, y: 0, phi: 0 },
+    options: Options = {}
+  ): Result => {
     if (!reference.length) {
       throw new Error('At least 1 reference point or line segment is required');
     }
@@ -49,27 +49,27 @@ export default (function() {
       ...options,
     };
 
-    const numDataPoints:number = data.length;
-    const transform:Transformation = { x: 0, y: 0, phi: 0 };
-    let dataPoints:Array<Point> = [...data];
-    let numIterations:number = 0;
+    const numDataPoints: number = data.length;
+    const transform: Transformation = { x: 0, y: 0, phi: 0 };
+    let dataPoints: Array<Point> = [...data];
+    let numIterations: number = 0;
 
-    for (let i:number = 0; i < opts.maxIterations; i += 1) {
-      let sampleCounter:number = 0;
-      let crp_x1:number = 0;
-      let crp_x2:number = 0;
-      let crp_y1:number = 0;
-      let crp_y2:number = 0;
-      let crp_xx:number = 0;
-      let crp_yy:number = 0;
-      let crp_xy:number = 0;
-      let crp_yx:number = 0;
-      let sumAbsX:number = 0;
-      let sumAbsY:number = 0;
+    for (let i: number = 0; i < opts.maxIterations; i += 1) {
+      let sampleCounter: number = 0;
+      let crp_x1: number = 0;
+      let crp_x2: number = 0;
+      let crp_y1: number = 0;
+      let crp_y2: number = 0;
+      let crp_xx: number = 0;
+      let crp_yy: number = 0;
+      let crp_xy: number = 0;
+      let crp_yx: number = 0;
+      let sumAbsX: number = 0;
+      let sumAbsY: number = 0;
 
-      for (let j:number = 0; j < numDataPoints; j += 1) {
-        const point:Point = dataPoints[j];
-        const closestPoint:Point = opts.method(point, reference);
+      for (let j: number = 0; j < numDataPoints; j += 1) {
+        const point: Point = dataPoints[j];
+        const closestPoint: Point = opts.method(point, reference);
 
         if (!closestPoint) {
           continue;
@@ -77,12 +77,12 @@ export default (function() {
 
         sampleCounter += 1;
 
-        const p1:Point = {
+        const p1: Point = {
           x: point.x - pose.x,
           y: point.y - pose.y,
         };
 
-        const p2:Point = {
+        const p2: Point = {
           x: closestPoint.x - pose.x,
           y: closestPoint.y - pose.y,
         };
@@ -101,22 +101,22 @@ export default (function() {
         sumAbsY += Math.abs(p1.y - p2.y);
       }
 
-      const n:number = sampleCounter;
+      const n: number = sampleCounter;
 
       // calculate S
-      const sxx:number = crp_xx - crp_x1 * crp_x2 / n;
-      const syy:number = crp_yy - crp_y1 * crp_y2 / n;
-      const sxy:number = crp_xy - crp_x1 * crp_y2 / n;
-      const syx:number = crp_yx - crp_y1 * crp_x2 / n;
+      const sxx: number = crp_xx - crp_x1 * crp_x2 / n;
+      const syy: number = crp_yy - crp_y1 * crp_y2 / n;
+      const sxy: number = crp_xy - crp_x1 * crp_y2 / n;
+      const syx: number = crp_yx - crp_y1 * crp_x2 / n;
 
       // calculate means
-      const xm1:number = crp_x1 / n;
-      const ym1:number = crp_y1 / n;
-      const xm2:number = crp_x2 / n;
-      const ym2:number = crp_y2 / n;
+      const xm1: number = crp_x1 / n;
+      const ym1: number = crp_y1 / n;
+      const xm2: number = crp_x2 / n;
+      const ym2: number = crp_y2 / n;
 
-      const mean1:Point = { x: xm1, y: ym1 };
-      const mean2:Point = { x: xm2, y: ym2 };
+      const mean1: Point = { x: xm1, y: ym1 };
+      const mean2: Point = { x: xm2, y: ym2 };
 
       const pointsCenterDifference = calculatePointsDistance(mean1, mean2);
 
@@ -124,16 +124,16 @@ export default (function() {
         break;
       }
 
-      const transformation:Transformation = { x: 0, y: 0, phi: 0 };
+      const transformation: Transformation = { x: 0, y: 0, phi: 0 };
       transformation.phi = Math.atan2(sxy - syx, sxx + syy);
 
-      const c:number = Math.cos(transformation.phi);
-      const s:number = Math.sin(transformation.phi);
+      const c: number = Math.cos(transformation.phi);
+      const s: number = Math.sin(transformation.phi);
 
       transformation.x = xm2 - (xm1 * c - ym1 * s);
       transformation.y = ym2 - (xm1 * s + ym1 * c);
 
-      // let rotationPoint:Point = { x: xm2, y: ym2 };
+      // let rotationPoint: Point = { x: xm2, y: ym2 };
       // rotationPoint += pose.phi;
 
       dataPoints = applyTranslation(dataPoints, transformation);

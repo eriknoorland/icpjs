@@ -1,10 +1,11 @@
-const subtractPoints = require('./subtractPoints');
-const pointLengthSquare = require('./pointLengthSquare');
+import { Point, LineSegment } from '../interfaces';
+import subtractPoints from './subtractPoints';
+import pointLengthSquare from './pointLengthSquare';
 
-module.exports = (point, { x1, y1, x2, y2 }) => {
-  const a2 = pointLengthSquare(subtractPoints(point, { x: x2, y: y2 }));
-  const b2 = pointLengthSquare(subtractPoints({ x: x1, y: y1 }, { x: x2, y: y2 }));
-  const c2 = pointLengthSquare(subtractPoints(point, { x: x1, y: y1 }));
+export default (point:Point, { x1, y1, x2, y2 }:LineSegment):Point | null => {
+  const a2:number = pointLengthSquare(subtractPoints(point, { x: x2, y: y2 }));
+  const b2:number = pointLengthSquare(subtractPoints({ x: x1, y: y1 }, { x: x2, y: y2 }));
+  const c2:number = pointLengthSquare(subtractPoints(point, { x: x1, y: y1 }));
 
   if (c2 + b2 < a2) {
     return { x: x1, y:  y1 };
@@ -14,16 +15,16 @@ module.exports = (point, { x1, y1, x2, y2 }) => {
     return { x: x2, y:  y2 };
   }
 
-  let a = y1 - y2;
-  let b = x2 - x1;
-  let c = x1 * y2 - x2 * y1;
-  let scale;
+  let a:number = y1 - y2;
+  let b:number = x2 - x1;
+  let c:number = x1 * y2 - x2 * y1;
+  let scale:number;
 
 
   if (b === 0) {
     if (a === 0) {
       // console.log('error, A or B must be non-zero');
-      return;
+      return null;
     }
 
     scale = -a;
@@ -41,7 +42,7 @@ module.exports = (point, { x1, y1, x2, y2 }) => {
       // console.log(`LineError: ${b} is not -1, fixing required`);
     }
 
-    let x;
+    let x:number;
 
     if (a !== 0) {
       x = (point.x / a + point.y - c) / (a + 1.0 / a);

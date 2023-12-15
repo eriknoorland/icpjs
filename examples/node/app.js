@@ -1,4 +1,4 @@
-const icpjs = require('../../dist/icpjs.min.js');
+const icpjs = require('../../dist/icpjs.js');
 const referenceLineSegments = require('./referenceLineSegments');
 const referencePoints = require('./referencePoints');
 
@@ -6,7 +6,6 @@ const xOffset = 150;
 const yOffset = 200;
 const phiOffset = -0.08;
 const noiseOffset = 50;
-const method = icpjs.methods.POINT_TO_PLANE;
 
 const pose = { x: 0, y: 0, phi: 0 };
 const reference = referenceLineSegments;
@@ -35,7 +34,6 @@ console.time('icp');
 const result = icpjs.run(reference, points, pose, {
   maxIterations: 30,
   tolerance: 2,
-  method,
 });
 console.timeEnd('icp');
 

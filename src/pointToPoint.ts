@@ -1,4 +1,4 @@
-import { LineSegment, Point } from './interfaces';
+import { Point } from './interfaces';
 import calculatePointsDistance from './utils/calculatePointsDistance';
 
 export default (point:Point, reference:Array<Point>):Point => {

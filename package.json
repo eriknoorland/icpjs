@@ -8,7 +8,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "icp",
@@ -25,8 +25,11 @@
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.5",
+    "@types/jest": "^29.5.11",
+    "jest": "^29.7.0",
     "rollup": "^4.9.0",
     "rollup-plugin-dts": "^6.1.0",
+    "ts-jest": "^29.1.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3"
   }

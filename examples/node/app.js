@@ -1,4 +1,4 @@
-const icpjs = require('../../dist/icpjs.js');
+const icpjs = require('../../dist/icpjs.umd.cjs');
 const referenceLineSegments = require('./referenceLineSegments');
 const referencePoints = require('./referencePoints');
 

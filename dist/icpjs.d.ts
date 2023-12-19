@@ -11,13 +11,13 @@ interface Pose {
     y: number;
     phi: number;
 }
-interface Tranformation {
+interface Transformation {
     x: number;
     y: number;
     phi: number;
 }
 interface Result {
-    transformation: Tranformation;
+    transformation: Transformation;
     dataPoints: Array<Point>;
     numIterations: number;
 }
@@ -25,8 +25,8 @@ interface Result {
 declare const _default: Readonly<{
     run: (reference: Array<any>, data: Array<Point>, pose?: Pose, options?: Options) => Result;
     utils: {
-        applyTranslation: (points: Point[], transformation: Tranformation) => Point[];
-        applyRotation: (points: Point[], transformation: Tranformation) => Point[];
+        applyTranslation: (points: Point[], transformation: Transformation) => Point[];
+        applyRotation: (points: Point[], transformation: Transformation) => Point[];
     };
 }>;
 

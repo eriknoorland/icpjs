@@ -7,15 +7,12 @@ A Javascript library written in Typescript to perform the iterative closest poin
 npm install git+https://git@github.com/eriknoorland/icpjs.git
 ```
 
-### Usage
-```html
-<script src="icpjs.js"></script>
-```
-
 ```js
+import icpjs from 'icpjs';
+
 const reference = [{ x, y }];
 const points = [{ x, y }];
-const result = window.icpjs.run(reference, points);
+const result = icpjs.run(reference, points);
 
 console.log(result);
 ```

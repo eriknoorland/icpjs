@@ -2,7 +2,6 @@ const xOffset = 150;
 const yOffset = 200;
 const phiOffset = -0.08;
 const noiseOffset = 50;
-const method = window.icpjs.methods.POINT_TO_PLANE;
 
 const canvas = document.getElementById('canvas');
 const context = canvas.getContext('2d');
@@ -33,7 +32,6 @@ console.time('icp');
 const result = window.icpjs.run(reference, points, pose, {
   maxIterations: 30,
   tolerance: 2,
-  method,
 });
 console.timeEnd('icp');
 

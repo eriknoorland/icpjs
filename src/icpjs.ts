@@ -49,27 +49,27 @@ export default (function() {
       ...options,
     };
 
-    const numDataPoints: number = data.length;
+    const numDataPoints = data.length;
     const transform: Transformation = { x: 0, y: 0, phi: 0 };
     let dataPoints: Array<Point> = [...data];
-    let numIterations: number = 0;
+    let numIterations = 0;
 
-    for (let i: number = 0; i < opts.maxIterations; i += 1) {
-      let sampleCounter: number = 0;
-      let crp_x1: number = 0;
-      let crp_x2: number = 0;
-      let crp_y1: number = 0;
-      let crp_y2: number = 0;
-      let crp_xx: number = 0;
-      let crp_yy: number = 0;
-      let crp_xy: number = 0;
-      let crp_yx: number = 0;
-      let sumAbsX: number = 0;
-      let sumAbsY: number = 0;
+    for (let i = 0; i < opts.maxIterations; i += 1) {
+      let sampleCounter = 0;
+      let crp_x1 = 0;
+      let crp_x2 = 0;
+      let crp_y1 = 0;
+      let crp_y2 = 0;
+      let crp_xx = 0;
+      let crp_yy = 0;
+      let crp_xy = 0;
+      let crp_yx = 0;
+      let sumAbsX = 0;
+      let sumAbsY = 0;
 
-      for (let j: number = 0; j < numDataPoints; j += 1) {
-        const point: Point = dataPoints[j];
-        const closestPoint: Point = opts.method(point, reference);
+      for (let j = 0; j < numDataPoints; j += 1) {
+        const point = dataPoints[j];
+        const closestPoint = opts.method(point, reference);
 
         if (!closestPoint) {
           continue;
@@ -101,19 +101,19 @@ export default (function() {
         sumAbsY += Math.abs(p1.y - p2.y);
       }
 
-      const n: number = sampleCounter;
+      const n = sampleCounter;
 
       // calculate S
-      const sxx: number = crp_xx - crp_x1 * crp_x2 / n;
-      const syy: number = crp_yy - crp_y1 * crp_y2 / n;
-      const sxy: number = crp_xy - crp_x1 * crp_y2 / n;
-      const syx: number = crp_yx - crp_y1 * crp_x2 / n;
+      const sxx = crp_xx - crp_x1 * crp_x2 / n;
+      const syy = crp_yy - crp_y1 * crp_y2 / n;
+      const sxy = crp_xy - crp_x1 * crp_y2 / n;
+      const syx = crp_yx - crp_y1 * crp_x2 / n;
 
       // calculate means
-      const xm1: number = crp_x1 / n;
-      const ym1: number = crp_y1 / n;
-      const xm2: number = crp_x2 / n;
-      const ym2: number = crp_y2 / n;
+      const xm1 = crp_x1 / n;
+      const ym1 = crp_y1 / n;
+      const xm2 = crp_x2 / n;
+      const ym2 = crp_y2 / n;
 
       const mean1: Point = { x: xm1, y: ym1 };
       const mean2: Point = { x: xm2, y: ym2 };
@@ -127,8 +127,8 @@ export default (function() {
       const transformation: Transformation = { x: 0, y: 0, phi: 0 };
       transformation.phi = Math.atan2(sxy - syx, sxx + syy);
 
-      const c: number = Math.cos(transformation.phi);
-      const s: number = Math.sin(transformation.phi);
+      const c = Math.cos(transformation.phi);
+      const s = Math.sin(transformation.phi);
 
       transformation.x = xm2 - (xm1 * c - ym1 * s);
       transformation.y = ym2 - (xm1 * s + ym1 * c);

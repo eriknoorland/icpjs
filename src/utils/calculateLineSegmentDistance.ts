@@ -3,9 +3,9 @@ import subtractPoints from './subtractPoints';
 import pointLengthSquare from './pointLengthSquare';
 
 export default (point: Point, { x1, y1, x2, y2 }:LineSegment): Point | null => {
-  const a2: number = pointLengthSquare(subtractPoints(point, { x: x2, y: y2 }));
-  const b2: number = pointLengthSquare(subtractPoints({ x: x1, y: y1 }, { x: x2, y: y2 }));
-  const c2: number = pointLengthSquare(subtractPoints(point, { x: x1, y: y1 }));
+  const a2 = pointLengthSquare(subtractPoints(point, { x: x2, y: y2 }));
+  const b2 = pointLengthSquare(subtractPoints({ x: x1, y: y1 }, { x: x2, y: y2 }));
+  const c2 = pointLengthSquare(subtractPoints(point, { x: x1, y: y1 }));
 
   if (c2 + b2 < a2) {
     return { x: x1, y:  y1 };
@@ -15,9 +15,9 @@ export default (point: Point, { x1, y1, x2, y2 }:LineSegment): Point | null => {
     return { x: x2, y:  y2 };
   }
 
-  let a: number = y1 - y2;
-  let b: number = x2 - x1;
-  let c: number = x1 * y2 - x2 * y1;
+  let a = y1 - y2;
+  let b = x2 - x1;
+  let c = x1 * y2 - x2 * y1;
   let scale: number;
 
 

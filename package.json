@@ -30,6 +30,11 @@
     "name": "Erik Noorland",
     "url": "https://github.com/eriknoorland"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eriknoorland/icpjs.git"
+  },
+  "homepage": "https://github.com/eriknoorland/icpjs#readme",
   "engines": {
     "node": ">=8.0.0"
   },

@@ -8,7 +8,7 @@ npm install @eriknoorland/icpjs
 ```
 
 ```js
-import icpjs from 'icpjs';
+import icpjs from '@eriknoorland/icpjs';
 
 const reference = [{ x, y }];
 const points = [{ x, y }];

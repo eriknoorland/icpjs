@@ -4,7 +4,7 @@ A Javascript library written in Typescript to perform the iterative closest poin
 
 ### Installation
 ```
-npm install git+https://git@github.com/eriknoorland/icpjs.git
+npm install icpjs
 ```
 
 ```js

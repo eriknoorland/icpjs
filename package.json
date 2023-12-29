@@ -30,6 +30,9 @@
     "name": "Erik Noorland",
     "url": "https://github.com/eriknoorland"
   },
+  "engines" : { 
+    "node" : ">=8.0.0"
+  },
   "license": "ISC",
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",

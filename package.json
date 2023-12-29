@@ -1,8 +1,10 @@
 {
   "name": "icpjs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A Javascript library written in Typescript to perform the iterative closest point (ICP) algorithm on two 2D point clouds.",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "./dist/icpjs.umd.cjs",
   "module": "./dist/icpjs.js",
   "types": "./dist/icpjs.d.ts",

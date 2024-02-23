@@ -1,6 +1,6 @@
 export interface Options {
-  maxIterations?:number,
-  tolerance?:number,
+  maxIterations?: number,
+  tolerance?: number,
 }
 
 export interface Point {
@@ -28,15 +28,23 @@ export interface Transformation {
 };
 
 export interface Result {
-  transformation:Transformation,
-  dataPoints:Array<Point>,
-  numIterations:number,
+  transformation: Transformation,
+  dataPoints: Array<Point>,
+  numIterations: number,
 };
 
-export const instanceOfPoint = (object:any): object is Point => {
+export const instanceOfPoint = (object: any): object is Point => {
   return 'x' in object && 'y' in object;
 }
 
-export const instanceOfLineSegment = (object:any): object is LineSegment => {
+export const instanceOfLineSegment = (object: any): object is LineSegment => {
   return 'x1' in object && 'x2' in object && 'y1' in object && 'y2' in object;
+}
+
+export const isArrayOfPoints = (array: unknown[]): array is Point[] => {
+  return array.every((a: unknown) => instanceOfPoint(a));
+}
+
+export const isArrayOfLineSegments = (array: unknown[]): array is LineSegment[] => {
+  return array.every((a: unknown) => instanceOfLineSegment(a));
 }

@@ -40,3 +40,11 @@ export const instanceOfPoint = (object: any): object is Point => {
 export const instanceOfLineSegment = (object: any): object is LineSegment => {
   return 'x1' in object && 'x2' in object && 'y1' in object && 'y2' in object;
 }
+
+export const isArrayOfPoints = (array: unknown[]): array is Point[] => {
+  return array.every((a: unknown) => instanceOfPoint(a));
+}
+
+export const isArrayOfLineSegments = (array: unknown[]): array is LineSegment[] => {
+  return array.every((a: unknown) => instanceOfLineSegment(a));
+}

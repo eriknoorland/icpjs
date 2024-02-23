@@ -4,8 +4,9 @@ import {
   Transformation,
   Pose,
   Result,
-  instanceOfPoint,
-  instanceOfLineSegment,
+  isArrayOfPoints,
+  isArrayOfLineSegments,
+  LineSegment,
 } from './interfaces';
 import calculatePointsDistance from './utils/calculatePointsDistance';
 import applyTranslation from './utils/applyTranslation';
@@ -15,8 +16,8 @@ import pointToPlane from './pointToPlane';
 
 export default (function() {
   const run = (
-    reference: Array<any>,
-    data: Array<Point>,
+    reference: Array<Point | LineSegment>,
+    data: Point[],
     pose: Pose = { x: 0, y: 0, phi: 0 },
     options: Options = {}
   ): Result => {
@@ -24,9 +25,9 @@ export default (function() {
       throw new Error('At least 1 reference point or line segment is required');
     }
 
-    const referenceItem = reference[0];
-    const isReferenceOfTypePoints = instanceOfPoint(referenceItem);
-    const isReferenceOfTypeLineSegments = instanceOfLineSegment(referenceItem);
+    const isReferenceOfTypePoints = isArrayOfPoints(reference);
+    const isReferenceOfTypeLineSegments = isArrayOfLineSegments(reference);
+    const isDataOfTypePoints = isArrayOfPoints(data);
 
     if (!isReferenceOfTypePoints && !isReferenceOfTypeLineSegments) {
       throw new Error('The reference should either be an array of points or line segments');
@@ -36,14 +37,11 @@ export default (function() {
       throw new Error('At least 1 data point is required');
     }
 
-    const isDataOfTypePoints = instanceOfPoint(data[0]);
-
     if (!isDataOfTypePoints) {
       throw new Error('The data should be an array of points');
     }
 
     const opts = {
-      method: isReferenceOfTypeLineSegments ? pointToPlane : pointToPoint,
       maxIterations: 20,
       tolerance: 0.1,
       ...options,
@@ -51,7 +49,7 @@ export default (function() {
 
     const numDataPoints = data.length;
     const transform: Transformation = { x: 0, y: 0, phi: 0 };
-    let dataPoints: Array<Point> = [...data];
+    let dataPoints: Point[] = [...data];
     let numIterations = 0;
 
     for (let i = 0; i < opts.maxIterations; i += 1) {
@@ -69,7 +67,16 @@ export default (function() {
 
       for (let j = 0; j < numDataPoints; j += 1) {
         const point = dataPoints[j];
-        const closestPoint = opts.method(point, reference);
+        
+        let closestPoint = null;
+
+        if (isReferenceOfTypePoints) {
+          closestPoint = pointToPoint(point, reference);
+        }
+        
+        if (isReferenceOfTypeLineSegments) {
+          closestPoint = pointToPlane(point, reference);
+        }
 
         if (!closestPoint) {
           continue;
